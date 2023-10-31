@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+  spark-master:
+    build: .
+    container_name: spark-master
+    ports:
+      - 9011:8080
+      - 9022:7077
+      - 9033:10000
+    volumes:
+      - ./id_rsa:/root/.ssh/id_rsa
+      - ./id_rsa.pub:/root/.ssh/id_rsa.pub
+      - ./id_rsa.pub:/root/.ssh/authorized_keys
+    networks:
+      - spark-network
+    depends_on:
+      - spark-worker-1
+      - spark-worker-2
+  spark-worker-1:
+    build: .
+    container_name: spark-worker-1
+    restart: always
+    ports:
+      - 9044:8080
+      - 9055:7077
+      - 9066:10000
+    volumes:
+      - ./id_rsa.pub:/root/.ssh/authorized_keys
+    networks:
+      - spark-network
+  spark-worker-2:
+    build: .
+    container_name: spark-worker-2
+    restart: always
+    ports:
+      - 9077:8080
+      - 9088:7077
+      - 9099:10000
+    volumes:
+      - ./id_rsa.pub:/root/.ssh/authorized_keys
+    networks:
+      - spark-network
+
+networks:
+  spark-network:
+    driver: bridge
