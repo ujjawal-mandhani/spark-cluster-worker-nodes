@@ -1,10 +1,17 @@
 ### How to?
 
-Create a id_rsa and id_rsa.pub (either from local or inside from docker container)
+Create a id_rsa and id_rsa.pub in the root of project (either from local or inside from docker container)
+![Alt text](src/directory_image.png)
+Run 
 
-Run docker-compose build && docker-compose up -d
+```bash 
 
-Increase no of spark cluster as you want in docker-compose file
+    docker-compose build && docker-compose up -d
+```
+
+Increase no of spark cluster as you want in docker-compose file and slaves file in project directory
+
+Change spark configurations from spark-env.sh if required
 
 ![Spark Server](src/image.png)
 
