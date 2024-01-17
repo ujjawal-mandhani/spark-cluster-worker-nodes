@@ -11,15 +11,9 @@ ENV SPARK_HOME /usr/local/share/spark
 RUN curl -fL "https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop3.tgz" | tar xfz - -C /usr/local/share && \
     mv "/usr/local/share/spark-$SPARK_VERSION-bin-hadoop3" "$SPARK_HOME"
 ENV PATH "$PATH:$SPARK_HOME/bin"
-COPY ./infinite/ /home/infinite
 RUN apt-get update && apt-get install -y openssh-server
 COPY sshd_config /etc/ssh/sshd_config
 COPY ssh_config /etc/ssh/ssh_config
 COPY spark-env.sh /usr/local/share/spark/conf/spark-env.sh
 COPY slaves /usr/local/share/spark/conf/slaves
-CMD [ "sh", "-c", "service ssh start && python3 /home/infinite/infinite.py"]
-
-# commands to execute
-# docker build . -t scala_image
-# docker run -it -v "./Volume/:/home" --name=scala_cont scala_image
-# spark-shell --driver-memory 1g --executor-memory 1g --packages org.postgresql:postgresql:42.1.1,com.microsoft.sqlserver:mssql-jdbc:9.4.0.jre8
+CMD ["sh", "-c", "service ssh start && sh -c /usr/local/share/spark/sbin/start-all.sh && tail -f /dev/null"]
