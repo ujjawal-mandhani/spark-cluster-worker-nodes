@@ -14,6 +14,8 @@ services:
       - ./id_rsa.pub:/root/.ssh/authorized_keys
     networks:
       - spark-network
+    mem_limit: 3g
+    mem_reservation: 512m
     depends_on:
       - spark-worker-1
       - spark-worker-2
@@ -29,6 +31,8 @@ services:
       - ./id_rsa.pub:/root/.ssh/authorized_keys
     networks:
       - spark-network
+    mem_limit: 3g
+    mem_reservation: 512m
   spark-worker-2:
     build: .
     container_name: spark-worker-2
@@ -41,6 +45,8 @@ services:
       - ./id_rsa.pub:/root/.ssh/authorized_keys
     networks:
       - spark-network
+    mem_limit: 3g
+    mem_reservation: 512m
 
 networks:
   spark-network:

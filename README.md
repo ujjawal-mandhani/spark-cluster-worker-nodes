@@ -2,6 +2,8 @@
 
 Create a id_rsa and id_rsa.pub in the root of project (either from local or inside from docker container)
 ![Alt text](src/directory_image.png)
+
+
 Run 
 
 ```bash 
